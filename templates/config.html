@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="text-center">Add a new action</h1>
+        <form id='dropdownForm'>
+            <div class="mb-3">
+                <label for="signalType" class="form-label">When I...:</label>
+                <select class="form-select" id="signalType" name="signalType" placeholder="Choose Action...">
+                    <option value="flic">Press Flic</option>
+                    <option value="spotify">Add to my Spotify</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="action" class="form-label">I want to...:</label>
+                <select class="form-select" id="action" name="action" placeholder="Choose Output Signal">
+                    <option value="message">Send a text message</option>
+                    <option value="whatsapp">Send a WhatsApp</option>
+                    <option value="call">Make a call</option>
+                    <option value="email">Send an email</option>
+                    <option value="log">Make a log</option>
+                </select>
+            <div class="mb-3" id="toEmailSection" style="display: none;">
+                <label for="to" class="form-label">To:</label>
+                <input class="form-control" id="to" name="to" placeholder="my-email@abc.com"></input>
+            </div>
+
+            <div class="mb-3" id="toPhoneNumberSection">
+                <label for="toPhone" class="form-label">To:</label>
+                <input class="form-control" id="toPhone" name="toPhone" placeholder="+44..."></input>
+            </div>
+
+            <div class="mb-3">
+                <label for="message" class="form-label">Enter your message:</label>
+                <textarea class="form-control" id="message" name="message" rows="3" placeholder="Type your message here..."></textarea>
+            </div>
+
+            <button value="submit" type="submit" class="btn btn-primary">Submit</button>
+            <button value="test" type="submit" class="btn btn-secondary">Test Contact Details</button>
+        </form>
+
+    <div id="responseMessage" class="mt-3"></div>
+{% endblock %}
+
+{% block javascripts_local %}
+{{ super() }}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#action').on('change', function() {
+            const selectedValue = $(this).val();
+            console.log('Selected value:', selectedValue);
+            if (selectedValue === 'email') {
+                // show the message input field if "flic" is selected
+                $('#toEmailSection').show();
+                $('#toPhoneNumberSection').hide();
+                
+            } else if (selectedValue === 'message') {
+                // show the message input field if "flic" is selected
+                $('#toPhoneNumberSection').show();
+                $('#toEmailSection').hide();
+            } else if (selectedValue === 'whatsapp') {
+                // show the message input field if "flic" is selected
+                $('#toPhoneNumberSection').show();
+                $('#toEmailSection').hide();
+            } else if (selectedValue === 'call') {
+                // show the message input field if "flic" is selected
+                $('#toPhoneNumberSection').show();
+                $('#toEmailSection').hide();
+            } else {
+                // hide the message input field for other selections
+                $('#toEmailSection').hide();
+                $('#toPhoneNumberSection').hide();
+            }
+        });
+        $('#dropdownForm button').on('click', function(event) {
+            event.preventDefault(); 
+            // Create JSON object
+            const formData = {
+                signalType: $('#signalType').val(),
+                action: $('#action').val(),
+                to : $('#action').val() == 'email' ? $('#to').val() : $('#toPhone').val(),
+                message: $('#message').val()
+            };
+            
+            var url = ""
+            if ($(this).attr("value") == "test") {
+                url = "/testContactDetails"
+            }
+            else { 
+                url = "/config"
+            }
+                
+            // Send JSON back to server
+            $.ajax({
+                url: url,
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(formData), 
+                success: function(response) {
+                    $('#responseMessage').html(`
+                        <div class="alert alert-success">${response.message}</div>
+                    `);
+                },
+                error: function(xhr, status, error) {
+                    if (xhr.status === 401) {
+                        window.location.href = '/login.html';
+                    } else {
+                        $('#responseMessage').html(`
+                        <div class="alert alert-danger">Error: ${xhr.responseJSON.error}</div>
+                    `);
+                    }
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

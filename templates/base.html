@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %} Home</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+<nav>
+    <div class="container">
+        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+          <ul class="nav nav-pills col-12 col-md-auto mb-2 justify-content-center mb-md-0">    
+            <li><a href="/" class="nav-link px-2">Home</a></li>
+            {% if session["userid"] and session["role"] =="user" %}
+                <li><a href="/addActions" class="nav-link px-2 {% if active_page == 'config' %}active{% endif %}">Add Actions</a></li>
+                <li><a href="/myActions" class="nav-link px-2 {% if active_page == 'myActions' %}active{% endif %}">My Actions</a></li>
+                <li><a href="/helplines" class="nav-link px-2 {% if active_page == 'helplines' %}active{% endif %}">Helplines</a></li>
+                <li><a href="/dashboard" class="nav-link px-2">Dashboard</a></li>
+                <li><a href="/help" class="nav-link px-2 {% if active_page == 'help' %}active{% endif %}">Help</a></li>
+            {% elif session["userid"] and session["role"]=="admin" %}  
+                <li><a href="/dashboard/admin" class="nav-link px-2 {% if active_page == '/dashboardadmin' %}active{% endif %}">Admin Dashboard</a></li>  
+            {% else %}  
+              <li><a href="/register" class="nav-link px-2">Register</a>
+            {% endif %}
+            </ul>
+            <div class="col-md-3 text-end">
+                <ul class="nav nav-pills col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+                    {% if session["userid"] %}
+                    <li><a href="/logout" class="nav-link px-2">Logout</a></li>
+                    {% else %}
+                    <li><a href="/login" class="nav-link px-2">Log In</a>
+                    {% endif %}
+                </ul>
+          </div>
+        </header>
+    </div>
+</nav>
+
+
+<section class="content">
+  <header>
+    {% block header %}{% endblock %}
+  </header>
+  {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+  {% block content %}{% endblock %}
+</section>
+</body>
+
+{% block javascripts %}
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% block javascripts_local %}{% endblock %}
+{% endblock %}

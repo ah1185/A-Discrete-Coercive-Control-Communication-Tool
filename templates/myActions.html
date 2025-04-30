@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1 class="text-center">{% block title %}My Actions{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th width="10%" scope="col">When I</th>
+            <th width="10%" scope="col">I want to</th>
+            <th width="50%" scope="col">Message</th>
+            <th width="15%" scope="col">Recipient</th>
+            <th width="15%" scope="col"> </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in actionsList %}
+        <tr id="{{item['_id']}}">
+            <td>{{item['signalType']}}</td>
+            <td>{{item['action']}}</td>
+            <td>{{item['body']}}</td>
+            <td>{{item['to']}}</td>
+            <td><button type="button" class="btn btn-danger delete-button">Delete</button></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
+{% block javascripts_local %}
+{{ super() }}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.delete-button').on('click', function(event) {
+            var row = $(this).closest('tr');
+            var id = row.attr('id');
+            $.ajax({
+                url: '/deleteConfig',
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify({id:id}), // Convert data to JSON
+                success: function(response) {
+                    // Handle success response
+                    console.log(response);
+                    row.remove(); // Remove the row from the table
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+        });
+</script>
+{% endblock %}

@@ -1,0 +1,47 @@
+
+{% extends 'base.html' %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+
+
+
+<div class="d-flex h-100 text-bg-light">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+
+    <main class="px-3">
+        <h1>About</h1>
+        <p class="lead">Modern technological advancements have undoubtedly transformed interpersonal relationships and have prompted widespread reconsideration of everyday challenges 
+            regarding privacy, constant connectivity, and surveillance. One advancement in particular that encourages this connectivity is the Internet of Things (IoT), a network of 
+            'smart' devices such as vehicles, doorbells, or other physical objects capable of sharing data. While such an integration offers undeniable convenience, 
+            it also expands how those with malicious intent can inflict harm on others. This project aims to develop a system for victims to communicate with their support network during potentially dangerous situations, 
+            whilst leveraging the IoT to deliver messages discreetly, avoiding detection from an abuser. </p>
+        <p class="lead">
+        <h1>Using my Flic Button</h1>
+        <p class="lead">Your user ID is {{session['userid']}}. To send a request...
+            <ul>
+                <li>1. Open the Flic App on your phone.</li>
+                <li>2. Add an Internet Request event to your preferred press type</li>
+                <li>3. Type 'application/json' in the Content Type box</li>
+                <li>4. Type '"userID":"{{session['userid']}}", "signalType":"flic"' between two curly brackets</li>
+                <li>5. Press your Flic to start an event!</li>
+            </ul>
+        </p>
+        <p class="lead">
+        <h1>Using my Spotify Account</h1>
+        <p class="lead">Linking your Spotify Account: Coming Soon...
+        </p>
+        <p class="lead">
+        </p>
+    </main>
+
+    <footer class="mt-auto text-white-50">
+        <p>Help page for my project <a href="https://getbootstrap.com/" class="text-white">Bootstrap</a>, by <a href="https://x.com/mdo" class="text-white">@mdo</a>.</p>
+    </footer>
+    </div>
+</div>
+
+    
+{% endblock %}

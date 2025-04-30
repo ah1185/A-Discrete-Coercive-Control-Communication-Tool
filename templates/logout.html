@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<div class="container mt-5">
+    <h1 class="text-center">you are logged out</h1>
+    <h2 class="text-center">Login again</h2>
+    <a href="/login.html" class="btn btn-primary">Login</a>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        
+            $.ajax({
+                url: '/logout', // Flask route to handle the submission
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8'
+                // success: function(response) {
+                //     // Display success message
+                //     window.location.href = '/config.html';
+                //     // $('#responseMessage').html(`
+                //     //     <div class="alert alert-success">${response.message}</div>
+                //     // `);
+                // },
+                // error: function(xhr, status, error) {
+                //     // Display error message
+                //     $('#responseMessage').html(`
+                //         <div class="alert alert-danger">Error: ${xhr.responseJSON.error}</div>
+                //     `);
+                // }
+            });
+        });
+</script>
+
+</body>
+</html>

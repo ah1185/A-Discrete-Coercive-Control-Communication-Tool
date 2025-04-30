@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+<div class="text-center">
+    <h3 class="text-center">Based on the data we've gathered about your activity levels...</h3>
+    {%if risk=="low"%}
+        <h2 class="text-center">We think you're at a Low Risk</h2>
+        <img class="text-center" src="/images/1.png" alt="Rating" style="width:500px;height:128px;">
+        <p>Is your relationship experiencing symptoms of coercive control?:<a href="https://safelives.org.uk/about-domestic-abuse/what-is-domestic-abuse/coercive-control/" target="_blank">Read about coercive control</a> </p>
+    {% elif risk=="medium"%}
+        <h2 class="text-center">We think you're at a Medium Risk</h2>
+        <img class="text-center" src="/images/2.png" alt="Rating" style="width:500px;height:128px;">
+        <p>It's likely that your relationship experiencing symptoms of coercive control? We recommend that you <a href="https://restless.co.uk/health/healthy-mind/coercive-control-warning-signs-and-where-to-turn-for-help/#:~:text=I%E2%80%99m%20experiencing%20coercive%20control%20%E2%80%93%20where%20can%20I,for%20male%20victims%20of%20domestic%20abuse.%20More%20items" target="_blank">find resources to help with coercive control</a>
+            <a href="https://safelives.org.uk/about-domestic-abuse/what-is-domestic-abuse/coercive-control/" target="_blank">Read about coercive control</a> </p>.</p>
+    {% elif risk=="high"%}
+        <h2 class="text-center">We think you're at a High Risk</h2>
+        <img src="/images/3.png" alt="Rating" style="width:500px;height:128px;">
+        <p>It's likely that you've noticed coercive control in your relationship and recommend the following support: <a href="https://www.nationaldahelpline.org.uk/">24-hr helpline for Domestic Abuse</a><p>, </p>
+        <a href="https://restless.co.uk/health/healthy-mind/coercive-control-warning-signs-and-where-to-turn-for-help/#:~:text=I%E2%80%99m%20experiencing%20coercive%20control%20%E2%80%93%20where%20can%20I,for%20male%20victims%20of%20domestic%20abuse.%20More%20items" target="_blank">Find resources to help with coercive control</a><p>, </p>
+        <a href="https://safelives.org.uk/about-domestic-abuse/what-is-domestic-abuse/coercive-control/" target="_blank">Read about coercive control</a> </p>
+        
+        {% else %}
+        <h2 class="text-center">We think you're at a Critical Risk Level</h2>
+        <img src="/images/4.png" alt="Rating" style="width:500px;height:128px;">
+        <p class="text-center">It's likely that you've noticed coercive control in your relationship. It's recommended you contact <a href="https://www.nationaldahelpline.org.uk/" target="_blank">a domestic abuse helpline</a> or seek urgent help from those around you to plan an exit strategy.</p>
+    {% endif %}
+
+    <div class="container text-center">
+        <a href="/dashboard/" class="btn btn-lg btn-light fw-bold border-black bg-white">View my activity data</a>
+    </div>
+
+</div>
+{% endblock %}
